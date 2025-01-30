@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player1 : MonoBehaviour
 {
     public float velocity;
-    public bool travarMouse = true;
-    public float mouseX = 0.0f, mouseY = 0.0f;
+    private bool travarMouse = true;
+    private float mouseX = 0.0f, mouseY = 0.0f;
     float sensibilidade = 1.2f;
     int num = 1;
   
@@ -21,13 +21,21 @@ public class Player : MonoBehaviour
     }
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            num *= -1;
+        }
+        
+        if (num > 0)
+        {
+            mouseY += Input.GetAxis("Mouse X") * sensibilidade;
+            mouseX += Input.GetAxis("Mouse Y") * sensibilidade;
 
-        mouseY += Input.GetAxis("Mouse X") * sensibilidade;
-        mouseX += Input.GetAxis("Mouse Y") * sensibilidade;
+            transform.eulerAngles = new Vector3(-mouseX, mouseY, 0);
 
-        transform.eulerAngles = new Vector3(-mouseX, mouseY, 0); 
-
-        move();
+            move();
+        }
+        
     }
 
     private void move()

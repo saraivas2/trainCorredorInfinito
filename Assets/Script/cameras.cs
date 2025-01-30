@@ -11,7 +11,7 @@ public class cameras : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKey(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             num *= -1;
         }
