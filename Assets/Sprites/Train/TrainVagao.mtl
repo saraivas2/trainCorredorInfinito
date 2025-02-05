@@ -1,0 +1,93 @@
+# Blender 4.2.2 LTS MTL File: 'None'
+# www.blender.org
+
+newmtl MTL_Emissive
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.500000 0.500000 0.500000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 3
+
+newmtl MTL_FakeAds
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 3
+map_Kd subwaycartextures/SubwayCarTextures/Fake Advertisments/T_FakeAds_Color.png
+
+newmtl MTL_Lightoff
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.500000 0.500000 0.500000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 3
+
+newmtl MTL_NonSeethroughGlass
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.500000 0.500000 0.500000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 3
+
+newmtl MTL_SubwayCarExterior
+Ns 200.000000
+Ka 0.301282 0.301282 0.301282
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+illum 3
+map_Kd subwaycartextures/SubwayCarTextures/Exterior Trim Textures/SM_ExteriorSubwayTrim_low_lambert1_BaseColor.png
+map_d subwaycartextures/SubwayCarTextures/Exterior Trim Textures/SM_ExteriorSubwayTrim_low_lambert1_BaseColor.png
+map_Bump -bm 1.000000 C:/file10
+
+newmtl MTL_SubwayExteriorWindows
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.500000 0.500000 0.500000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 3
+
+newmtl MTL_SubwayUnder
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 3
+map_Kd F:/Portfolio work/Subway_TheDivisionInspo/Materials/SubwayTrack/T_SubwayTracks_Trim_Color.png
+
+newmtl Mtl_SubwayInterior
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+illum 3
+map_Kd subwaycartextures/SubwayCarTextures/Interior Trim Textures/SM_InteriorSubwayTrim_low_Mtl_SubwayInterior_BaseColor.png
+map_d subwaycartextures/SubwayCarTextures/Interior Trim Textures/SM_InteriorSubwayTrim_low_Mtl_SubwayInterior_BaseColor.png
+
+newmtl lambert1
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.500000 0.500000 0.500000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 3

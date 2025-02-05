@@ -1,0 +1,240 @@
+# Exported from Wings 3D 2.4.1
+newmtl Bank_Baked
+Ns 9.999999999999998
+d 1.0
+illum 2
+Kd 1.0 1.0 1.0
+Ka 0.0 0.0 0.0
+Ks 1.0 1.0 1.0
+Ke 0.0 0.0 0.0
+map_Kd train_station_baseColorTexture.png
+
+newmtl Bulbs_Baked
+Ns 9.999999999999998
+d 1.0
+illum 2
+Kd 1.0 1.0 1.0
+Ka 0.0 0.0 0.0
+Ks 1.0 1.0 1.0
+Ke 0.0 0.0 0.0
+map_Kd train_station_baseColorTexture.png
+
+newmtl Cube.002_Baked
+Ns 9.999999999999998
+d 1.0
+illum 2
+Kd 1.0 1.0 1.0
+Ka 0.0 0.0 0.0
+Ks 1.0 1.0 1.0
+Ke 0.0 0.0 0.0
+map_Kd train_station_baseColorTexture.png
+
+newmtl Cube.004_Baked
+Ns 9.999999999999998
+d 1.0
+illum 2
+Kd 1.0 1.0 1.0
+Ka 0.0 0.0 0.0
+Ks 1.0 1.0 1.0
+Ke 0.0 0.0 0.0
+map_Kd train_station_baseColorTexture.png
+
+newmtl Cube.005_Baked
+Ns 9.999999999999998
+d 1.0
+illum 2
+Kd 1.0 1.0 1.0
+Ka 0.0 0.0 0.0
+Ks 1.0 1.0 1.0
+Ke 0.0 0.0 0.0
+map_Kd train_station_baseColorTexture.png
+
+newmtl Cube.006_Baked
+Ns 9.999999999999998
+d 1.0
+illum 2
+Kd 1.0 1.0 1.0
+Ka 0.0 0.0 0.0
+Ks 1.0 1.0 1.0
+Ke 0.0 0.0 0.0
+map_Kd train_station_baseColorTexture.png
+
+newmtl Cube.007_Baked
+Ns 9.999999999999998
+d 1.0
+illum 2
+Kd 1.0 1.0 1.0
+Ka 0.0 0.0 0.0
+Ks 1.0 1.0 1.0
+Ke 0.0 0.0 0.0
+map_Kd train_station_baseColorTexture.png
+
+newmtl Cube.008_Baked
+Ns 9.999999999999998
+d 1.0
+illum 2
+Kd 1.0 1.0 1.0
+Ka 0.0 0.0 0.0
+Ks 1.0 1.0 1.0
+Ke 0.0 0.0 0.0
+map_Kd train_station_baseColorTexture.png
+
+newmtl Door_handles_Baked
+Ns 9.999999999999998
+d 1.0
+illum 2
+Kd 1.0 1.0 1.0
+Ka 0.0 0.0 0.0
+Ks 1.0 1.0 1.0
+Ke 0.0 0.0 0.0
+map_Kd train_station_baseColorTexture.png
+
+newmtl Glass_Baked
+Ns 9.999999999999998
+d 1.0
+illum 2
+Kd 1.0 1.0 1.0
+Ka 0.0 0.0 0.0
+Ks 1.0 1.0 1.0
+Ke 0.0 0.0 0.0
+map_Kd train_station_baseColorTexture.png
+
+newmtl Ground_Baked
+Ns 9.999999999999998
+d 1.0
+illum 2
+Kd 1.0 1.0 1.0
+Ka 0.0 0.0 0.0
+Ks 1.0 1.0 1.0
+Ke 0.0 0.0 0.0
+map_Kd train_station_baseColorTexture.png
+
+newmtl Guttering_Baked
+Ns 9.999999999999998
+d 1.0
+illum 2
+Kd 1.0 1.0 1.0
+Ka 0.0 0.0 0.0
+Ks 1.0 1.0 1.0
+Ke 0.0 0.0 0.0
+map_Kd train_station_baseColorTexture.png
+
+newmtl Lights_Baked
+Ns 9.999999999999998
+d 1.0
+illum 2
+Kd 1.0 1.0 1.0
+Ka 0.0 0.0 0.0
+Ks 1.0 1.0 1.0
+Ke 0.0 0.0 0.0
+map_Kd train_station_baseColorTexture.png
+
+newmtl Planter_soil_Baked
+Ns 9.999999999999998
+d 1.0
+illum 2
+Kd 1.0 1.0 1.0
+Ka 0.0 0.0 0.0
+Ks 1.0 1.0 1.0
+Ke 0.0 0.0 0.0
+map_Kd train_station_baseColorTexture.png
+
+newmtl Platform_Baked
+Ns 9.999999999999998
+d 1.0
+illum 2
+Kd 1.0 1.0 1.0
+Ka 0.0 0.0 0.0
+Ks 1.0 1.0 1.0
+Ke 0.0 0.0 0.0
+map_Kd train_station_baseColorTexture.png
+
+newmtl Railing_Baked
+Ns 9.999999999999998
+d 1.0
+illum 2
+Kd 1.0 1.0 1.0
+Ka 0.0 0.0 0.0
+Ks 1.0 1.0 1.0
+Ke 0.0 0.0 0.0
+map_Kd train_station_baseColorTexture.png
+
+newmtl Rails_Baked
+Ns 9.999999999999998
+d 1.0
+illum 2
+Kd 1.0 1.0 1.0
+Ka 0.0 0.0 0.0
+Ks 1.0 1.0 1.0
+Ke 0.0 0.0 0.0
+map_Kd train_station_baseColorTexture.png
+
+newmtl Ramp_Baked
+Ns 9.999999999999998
+d 1.0
+illum 2
+Kd 1.0 1.0 1.0
+Ka 0.0 0.0 0.0
+Ks 1.0 1.0 1.0
+Ke 0.0 0.0 0.0
+map_Kd train_station_baseColorTexture.png
+
+newmtl Roof_Baked
+Ns 9.999999999999998
+d 1.0
+illum 2
+Kd 1.0 1.0 1.0
+Ka 0.0 0.0 0.0
+Ks 1.0 1.0 1.0
+Ke 0.0 0.0 0.0
+map_Kd train_station_baseColorTexture.png
+
+newmtl Room_Baked
+Ns 9.999999999999998
+d 1.0
+illum 2
+Kd 1.0 1.0 1.0
+Ka 0.0 0.0 0.0
+Ks 1.0 1.0 1.0
+Ke 0.0 0.0 0.0
+map_Kd train_station_baseColorTexture.png
+
+newmtl Sleepers_Baked
+Ns 9.999999999999998
+d 1.0
+illum 2
+Kd 1.0 1.0 1.0
+Ka 0.0 0.0 0.0
+Ks 1.0 1.0 1.0
+Ke 0.0 0.0 0.0
+map_Kd train_station_baseColorTexture.png
+
+newmtl Vents_Baked
+Ns 9.999999999999998
+d 1.0
+illum 2
+Kd 1.0 1.0 1.0
+Ka 0.0 0.0 0.0
+Ks 1.0 1.0 1.0
+Ke 0.0 0.0 0.0
+map_Kd train_station_baseColorTexture.png
+
+newmtl Window_frames_Baked
+Ns 9.999999999999998
+d 1.0
+illum 2
+Kd 1.0 1.0 1.0
+Ka 0.0 0.0 0.0
+Ks 1.0 1.0 1.0
+Ke 0.0 0.0 0.0
+map_Kd train_station_baseColorTexture.png
+
+newmtl default
+Ns 19.999999999999996
+d 1.0
+illum 2
+Kd 0.7898538076923077 0.8133333333333334 0.6940444444444445
+Ka 0.0 0.0 0.0
+Ks 0.1689853807692308 0.17133333333333334 0.15940444444444446
+Ke 0.0 0.0 0.0
+

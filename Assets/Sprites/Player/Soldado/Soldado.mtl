@@ -1,0 +1,55 @@
+# Blender 4.2.2 LTS MTL File: 'None'
+# www.blender.org
+
+newmtl None
+Ns 499.999969
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.800000 0.800000 0.800000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+
+newmtl T1
+Ns 0.000000
+Ka 0.741497 0.741497 0.741497
+Ks 0.108844 0.108844 0.108844
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+illum 3
+map_Kd -o 0 -1 0 Soldado/Lower.png
+map_d -o 0 -1 0 Soldado/D:/For Turbo Squid Sell/Soldier/source/Tex_0013_1.PNG
+map_Bump -o 0 -1 0 -bm 0.200000 Soldado/D:/For Turbo Squid Sell/Soldier/source/tex/Tex_0013_7.PNG
+
+newmtl T2
+Ns 0.000000
+Ka 0.611087 0.611087 0.611087
+Ks 0.391156 0.391156 0.391156
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+illum 3
+map_Kd -o 0 -1 0 Soldado/Body.png
+map_d -o 0 -1 0 Soldado/D:/For Turbo Squid Sell/Soldier/source/Tex_0011_1.PNG
+map_Bump -o 0 -1 0 -bm 0.200000 Soldado/D:/For Turbo Squid Sell/Soldier/source/tex/Tex_0011_7.PNG
+
+newmtl T3
+Ns 0.000000
+Ka 0.265306 0.265306 0.265306
+Ks 0.452381 0.452381 0.452381
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+illum 3
+map_Kd -o 0 -1 0 Soldado/Tex_0010_1.PNG
+map_d -o 0 -1 0 Soldado/Tex_0010_1.PNG
+
+newmtl T4
+Ns 0.000000
+Ka 0.367347 0.367347 0.367347
+Ks 0.234168 0.234168 0.234168
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+illum 3
+map_Kd -o 0 -1 0 Soldado/Head.png
+map_d -o 0 -1 0 Soldado/D:/For Turbo Squid Sell/Soldier/textures/Tex_0008_1.PNG
+map_Bump -o 0 -1 0 -bm 0.200000 Soldado/D:/For Turbo Squid Sell/Soldier/textures/Tex_0008_7.PNG
