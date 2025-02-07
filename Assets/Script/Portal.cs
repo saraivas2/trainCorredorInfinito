@@ -19,9 +19,5 @@ public class Portal : MonoBehaviour
             player.transform.position = pointPosition.transform.position;
         }
 
-        if (other.CompareTag("Player1"))
-        {
-            player.transform.position = pointPosition.transform.position;
-        }
     }
 }
