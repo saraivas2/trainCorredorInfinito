@@ -6,8 +6,6 @@ TagManager:
   tags:
   - point
   - portal
-  - Player1
-  - Player2
   - Train
   layers:
   - Default

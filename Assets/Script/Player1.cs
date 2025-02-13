@@ -2,34 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class Player1 : MonoBehaviour
 {
     public float velocity;
+    [SerializeField] private GameObject idlePistol;
+    [SerializeField] private GameObject idleRifle;
+    [SerializeField] private GameObject Pistol;
+    [SerializeField] private GameObject Rifle;
     private bool travarMouse = true;
-    private float mouseX = 0.0f, mouseY = 0.0f;
+    private float mouseY = 0.0f;
     float sensibilidade = 1.2f;
-    int num = 1;
-    public Vector3 vel;
     private Animator animator;
     private Rigidbody rb;
-    private int walk = Animator.StringToHash("walk");
-    private int jump = Animator.StringToHash("jump");
-    private int idle = Animator.StringToHash("idle");
-    private int run = Animator.StringToHash("run");
-    private int Rifle = Animator.StringToHash("rifleFire");
-    private int Pistol = Animator.StringToHash("pistolFire");
-    private int walkRifle = Animator.StringToHash("rifleFireWalk");
-    private int walkPistol = Animator.StringToHash("pistolFireWalk");
-    private int chute1 = Animator.StringToHash("chute1");
-    private int chute2 = Animator.StringToHash("chute2");
-    private int giro1 = Animator.StringToHash("giro1");
-    private int giro2 = Animator.StringToHash("giro2");
-    private int soco1 = Animator.StringToHash("soco1");
-    private int soco2 = Animator.StringToHash("soco2");
-    private int death = Animator.StringToHash("death");
-    bool moviment=false;
-    bool pistolBool,rifleBool=false;
+    private bool pistolBool, rifleBool,SemTiro;
+    public float forca;
+    private int vel = 1, val=1;
+    public float tempo = 0;
+    private Vector3 camVect;
 
     private void Start()
     {
@@ -38,343 +29,291 @@ public class Player1 : MonoBehaviour
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
         }
-
+        SemTiro = true;
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
     }
     private void Update()
     {
-
         comandosMove();
 
-        comandosAttacks();
-    }
+        //comandosAttacks();
 
-    private void comandosAttacks()
-    {
-        if (Input.GetKeyDown(KeyCode.Q)) //
+        if (Input.GetMouseButton(1))
         {
-            AttackSoco1Player();
+            val *= -1;
         }
-        else if (Input.GetKeyDown(KeyCode.E)) //
-        {
-            AttackSoco2Player();
-        }
-        else if (Input.GetKeyDown(KeyCode.R)) //
-        {
-            AttackGiro1Player();
-        }
-        else if (Input.GetKeyDown(KeyCode.F)) //
-        {
-            AttackGiro2Player();
-        }
-        else if (Input.GetKeyDown(KeyCode.X)) //
-        {
-            AttackChute1Player();
-        }
-        else if (Input.GetKeyDown(KeyCode.C)) //
-        {
-            AttackChute2Player();
-        }
-    }
-    private void comandosMove()
-    {
-        mouseY += Input.GetAxis("Mouse X") * sensibilidade;
-        mouseX += Input.GetAxis("Mouse Y") * sensibilidade;
 
-        transform.eulerAngles = new Vector3(-mouseX, mouseY, 0);
-
-
-        float vert = Input.GetAxis("Vertical");
-        float horiz = Input.GetAxis("Horizontal");
-
-        if (vert != 0 | horiz != 0)
+        if (val > 0)
         {
-            move(horiz, vert);
+            pistolBool = true;
+            rifleBool = false;
+            idlePistol.SetActive(true);
+            idleRifle.SetActive(false);
         }
         else
         {
-            if (Input.GetMouseButton(1) & pistolBool)
+            pistolBool = false;
+            rifleBool = true;
+            idlePistol.SetActive(false);
+            idleRifle.SetActive(true);
+        }
+
+        tempo -= Time.deltaTime;
+        if (tempo <= 0)
+        {
+            SemTiro = false;
+        }
+    }
+
+    
+    private void comandosMove()
+    {
+        mouseY += Input.GetAxis("Mouse X") * sensibilidade;
+        //mouseX += Input.GetAxis("Mouse Y") * sensibilidade;
+
+        //transform.eulerAngles = new Vector3(0, mouseY, 0);
+
+        Quaternion quat = Quaternion.Euler(new Vector3(0, mouseY, 0));
+        rb.MoveRotation(quat);
+
+        camVect = GetDirectionVector(mouseY);
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            jumpPlayerMoviment();
+        }
+        else if (Input.GetKey(KeyCode.R))
+        {
+            moveRun();
+        }
+        else if (Input.GetKey(KeyCode.W))
+        {
+            moveWalk();
+            
+        }
+        else if (Input.GetKey(KeyCode.S))
+        {
+            movePlayerBack();
+            //transform.Translate(Time.deltaTime * velocity * Vector3.back);
+
+            rb.velocity = -camVect * Time.deltaTime * velocity;
+        }
+        else
+        {
+            if (pistolBool)
             {
-                AttackPistoFirePlayer();
+                if (Input.GetMouseButton(0))
+                {
+                    ChamaTiroPistol();
+                }
+                AttackPistolFirePlayer();
             }
-            else if (Input.GetMouseButton(1) & rifleBool)
+            else if (rifleBool)
             {
+                if (Input.GetMouseButton(0))
+                {
+                    ChamaTiroRifle();
+                }
                 AttackRifleFirePlayer();
             }
-            else
+            //transform.Translate(Vector3.zero);
+            rb.velocity = Vector3.zero;
+            
+        }
+    }
+
+    private void ChamaTiroPistol()
+    {
+       
+        
+        if (!SemTiro)
+        {
+            AtirarInstantiate PistolInstantiateScript = Pistol.gameObject.GetComponentInChildren<AtirarInstantiate>();
+            PistolInstantiateScript.InstantiateBala();
+            tempo = 0.375f;
+            SemTiro = true;
+        }   
+    }
+
+    private void ChamaTiroRifle()
+    {
+        if (!SemTiro)
+        {
+            AtirarInstantiate RifleInstantiateScript = Rifle.gameObject.GetComponentInChildren<AtirarInstantiate>();
             {
-                IdlePlayer();
+                RifleInstantiateScript.InstantiateBala();
+                tempo = 0.1f;
+                SemTiro = true;
             }
         }
     }
-    private void move(float horiz, float vert)
+
+    private void jumpPlayerMoviment()
     {
-        if (Input.GetMouseButton(1) & pistolBool)
+        if (pistolBool)
         {
-            AttackPistoFireWalkPlayer();
-        } else if (Input.GetMouseButton(1) & rifleBool)
+            if (Input.GetMouseButton(0))
+            {
+                ChamaTiroPistol();
+            }
+            JumpPlayerPistol();
+        }
+        else if (rifleBool)
+        {
+            if (Input.GetMouseButton(0))
+            {
+                ChamaTiroRifle();
+            }
+                       
+            JumpPlayerRifle();
+        }
+        
+        rb.AddForce(Vector3.up * forca * Time.deltaTime, ForceMode.Impulse);
+    }
+
+
+    private void moveRun()
+    {
+        if (pistolBool)
+        {
+            if (Input.GetMouseButton(0))
+            {
+                ChamaTiroPistol();
+            }
+            
+            RunPistoPlayer();
+            vel = 4;
+        }
+        else if (rifleBool)
+        {
+            if (Input.GetMouseButton(0))
+            {
+                ChamaTiroRifle();
+            }
+            
+            RunRiflePlayer();
+            vel = 4;
+        }
+        //transform.Translate(Time.deltaTime * Vector3.forward * velocity * vel);
+        rb.velocity = camVect * Time.deltaTime * velocity * vel;
+    }
+
+
+    private void moveWalk()
+    {
+        if (Input.GetMouseButton(0) & pistolBool)
+        {
+            AttackPistolFireWalkPlayer();
+            ChamaTiroPistol();
+
+        } else if (Input.GetMouseButton(0) & rifleBool)
         {
             AttackRifleFireWalkPlayer();
+            ChamaTiroRifle();
         }
         else
         {
             movePlayer();
+            vel = 1;          
         }
-        transform.Translate(Time.deltaTime * new Vector3(horiz, 0, vert) * velocity);
+        //transform.Translate(Time.deltaTime * Vector3.forward * velocity * vel);
+        rb.velocity = camVect * Time.deltaTime * velocity;
     }
 
     private void movePlayer()
     {
-        animator.SetBool(jump, false);
-        animator.SetBool(idle, false);
-        animator.SetBool(walk, true);
-        animator.SetBool(run, false);
-        animator.SetBool(Rifle, false);
-        animator.SetBool(Pistol, false);
-        animator.SetBool(walkRifle, false);
-        animator.SetBool(walkPistol, false);
-        animator.SetBool(chute1, false);
-        animator.SetBool(chute2, false);
-        animator.SetBool(giro1, false);
-        animator.SetBool(giro2, false);
-        animator.SetBool(soco1, false);
-        animator.SetBool(soco2, false);
-        animator.SetBool(death, false);
-}
 
-    private void JumpPlayer()
+        if (pistolBool)
+        {
+            AttackPistolFireWalkPlayer();
+        }
+        else if (rifleBool)
+        {
+            AttackRifleFireWalkPlayer();
+        }
+    }
+
+    private void movePlayerBack()
     {
-        animator.SetBool(jump, true);
-        animator.SetBool(idle, false);
-        animator.SetBool(walk, false);
-        animator.SetBool(run, false);
-        animator.SetBool(Rifle, false);
-        animator.SetBool(Pistol, false);
-        animator.SetBool(walkRifle, false);
-        animator.SetBool(walkPistol, false);
-        animator.SetBool(chute1, false);
-        animator.SetBool(chute2, false);
-        animator.SetBool(giro1, false);
-        animator.SetBool(giro2, false);
-        animator.SetBool(soco1, false);
-        animator.SetBool(soco2, false);
-        animator.SetBool(death, false);
 
+        if (pistolBool)
+        {
+            AttackPistolFireWalkBack();
+        }
+        else if (rifleBool)
+        {
+            AttackRifleFireWalkBack();
+        }
+    }
+    private void AttackPistolFireWalkBack()
+    {
+        animator.SetBool("rifle", false);
+        animator.SetFloat("X", -1);
+        animator.SetFloat("Y", 1);
+    }
+
+    private void AttackRifleFireWalkBack()
+    {
+        animator.SetBool("rifle", true);
+        animator.SetFloat("Z", -1);
+        animator.SetFloat("K", 0);
+    }
+
+    private void JumpPlayerPistol()
+    {
+        animator.SetBool("rifle", false);
+        animator.SetFloat("X", 0);
+        animator.SetFloat("Y", 1);
+    }
+
+    private void JumpPlayerRifle()
+    {
+        animator.SetBool("rifle", true);
+        animator.SetFloat("Z", 1);
+        animator.SetFloat("K", -1);
+    }
+
+    private void AttackGolpePlayer()
+    {
+        animator.SetBool("rifle", true);
+        animator.SetFloat("Z",0);
+        animator.SetFloat("K",1);
+
+    }
+    
+    private void AttackPistolFirePlayer()
+    {
+        animator.SetBool("rifle", false);
+        animator.SetFloat("X", 0);
+        animator.SetFloat("Y", 0);
     }
 
 
-    private void AttackChute1Player()
+    private void AttackPistolFireWalkPlayer()
     {
-        animator.SetBool(jump, false);
-        animator.SetBool(idle, false);
-        animator.SetBool(walk, false);
-        animator.SetBool(run, false);
-        animator.SetBool(Rifle, false);
-        animator.SetBool(Pistol, false);
-        animator.SetBool(walkRifle, false);
-        animator.SetBool(walkPistol, false);
-        animator.SetBool(chute1, true);
-        animator.SetBool(chute2, false);
-        animator.SetBool(giro1, false);
-        animator.SetBool(giro2, false);
-        animator.SetBool(soco1, false);
-        animator.SetBool(soco2, false);
-        animator.SetBool(death, false);
-
-    }
-
-    private void AttackSoco2Player()
-    {
-        animator.SetBool(jump, false);
-        animator.SetBool(idle, false);
-        animator.SetBool(walk, false);
-        animator.SetBool(run, false);
-        animator.SetBool(Rifle, false);
-        animator.SetBool(Pistol, false);
-        animator.SetBool(walkRifle, false);
-        animator.SetBool(walkPistol, false);
-        animator.SetBool(chute1, false);
-        animator.SetBool(chute2, false);
-        animator.SetBool(giro1, false);
-        animator.SetBool(giro2, false);
-        animator.SetBool(soco1, false);
-        animator.SetBool(soco2, true);
-        animator.SetBool(death, false);
-
-    }
-    private void AttackChute2Player()
-    {
-        animator.SetBool(jump, false);
-        animator.SetBool(idle, false);
-        animator.SetBool(walk, false);
-        animator.SetBool(run, false);
-        animator.SetBool(Rifle, false);
-        animator.SetBool(Pistol, false);
-        animator.SetBool(walkRifle, false);
-        animator.SetBool(walkPistol, false);
-        animator.SetBool(chute1, false);
-        animator.SetBool(chute2, true);
-        animator.SetBool(giro1, false);
-        animator.SetBool(giro2, false);
-        animator.SetBool(soco1, false);
-        animator.SetBool(soco2, false);
-        animator.SetBool(death, false);
-
-    }
-    private void AttackSoco1Player()
-    {
-        animator.SetBool(jump, false);
-        animator.SetBool(idle, false);
-        animator.SetBool(walk, false);
-        animator.SetBool(run, false);
-        animator.SetBool(Rifle, false);
-        animator.SetBool(Pistol, false);
-        animator.SetBool(walkRifle, false);
-        animator.SetBool(walkPistol, false);
-        animator.SetBool(chute1, false);
-        animator.SetBool(chute2, false);
-        animator.SetBool(giro1, false);
-        animator.SetBool(giro2, false);
-        animator.SetBool(soco1, true);
-        animator.SetBool(soco2, false);
-        animator.SetBool(death, false);
-
-    }
-    private void AttackGiro1Player()
-    {
-        animator.SetBool(jump, false);
-        animator.SetBool(idle, false);
-        animator.SetBool(walk, false);
-        animator.SetBool(run, false);
-        animator.SetBool(Rifle, false);
-        animator.SetBool(Pistol, false);
-        animator.SetBool(walkRifle, false);
-        animator.SetBool(walkPistol, false);
-        animator.SetBool(chute1, false);
-        animator.SetBool(chute2, false);
-        animator.SetBool(giro1, true);
-        animator.SetBool(giro2, false);
-        animator.SetBool(soco1, false);
-        animator.SetBool(soco2, false);
-        animator.SetBool(death, false);
-
-    }
-    private void AttackGiro2Player()
-    {
-        animator.SetBool(jump, false);
-        animator.SetBool(idle, false);
-        animator.SetBool(walk, false);
-        animator.SetBool(run, false);
-        animator.SetBool(Rifle, false);
-        animator.SetBool(Pistol, false);
-        animator.SetBool(walkRifle, false);
-        animator.SetBool(walkPistol, false);
-        animator.SetBool(chute1, false);
-        animator.SetBool(chute2, false);
-        animator.SetBool(giro1, false);
-        animator.SetBool(giro2, true);
-        animator.SetBool(soco1, false);
-        animator.SetBool(soco2, false);
-        animator.SetBool(death, false);
-
-    }
-
-    private void AttackPistoFirePlayer()
-    {
-        animator.SetBool(jump, false);
-        animator.SetBool(idle, false);
-        animator.SetBool(walk, false);
-        animator.SetBool(run, false);
-        animator.SetBool(Rifle, false);
-        animator.SetBool(Pistol, true);
-        animator.SetBool(walkRifle, false);
-        animator.SetBool(walkPistol, false);
-        animator.SetBool(chute1, false);
-        animator.SetBool(chute2, false);
-        animator.SetBool(giro1, false);
-        animator.SetBool(giro2, false);
-        animator.SetBool(soco1, false);
-        animator.SetBool(soco2, false);
-        animator.SetBool(death, false);
-
-    }
-
-
-    private void AttackPistoFireWalkPlayer()
-    {
-        animator.SetBool(jump, false);
-        animator.SetBool(idle, false);
-        animator.SetBool(walk, false);
-        animator.SetBool(run, false);
-        animator.SetBool(Rifle, false);
-        animator.SetBool(Pistol, false);
-        animator.SetBool(walkRifle, false);
-        animator.SetBool(walkPistol, true);
-        animator.SetBool(chute1, false);
-        animator.SetBool(chute2, false);
-        animator.SetBool(giro1, false);
-        animator.SetBool(giro2, false);
-        animator.SetBool(soco1, false);
-        animator.SetBool(soco2, false);
-        animator.SetBool(death, false);
+        animator.SetBool("rifle", false);
+        animator.SetFloat("X", 1);
+        animator.SetFloat("Y", 0);
     }
 
     private void AttackRifleFirePlayer()
     {
-        animator.SetBool(jump, false);
-        animator.SetBool(idle, false);
-        animator.SetBool(walk, false);
-        animator.SetBool(run, false);
-        animator.SetBool(Rifle, true);
-        animator.SetBool(Pistol, false);
-        animator.SetBool(walkRifle, false);
-        animator.SetBool(walkPistol, false);
-        animator.SetBool(chute1, false);
-        animator.SetBool(chute2, false);
-        animator.SetBool(giro1, false);
-        animator.SetBool(giro2, false);
-        animator.SetBool(soco1, false);
-        animator.SetBool(soco2, false);
-        animator.SetBool(death, false);
+        animator.SetBool("rifle", true);
+        animator.SetFloat("Z", 0);
+        animator.SetFloat("K", 0);
     }
 
     private void AttackRifleFireWalkPlayer()
     {
-        animator.SetBool(jump, false);
-        animator.SetBool(idle, false);
-        animator.SetBool(walk, false);
-        animator.SetBool(run, false);
-        animator.SetBool(Rifle, false);
-        animator.SetBool(Pistol, false);
-        animator.SetBool(walkRifle, true);
-        animator.SetBool(walkPistol, false);
-        animator.SetBool(chute1, false);
-        animator.SetBool(chute2, false);
-        animator.SetBool(giro1, false);
-        animator.SetBool(giro2, false);
-        animator.SetBool(soco1, false);
-        animator.SetBool(soco2, false);
-        animator.SetBool(death, false);
+        animator.SetBool("rifle", true);
+        animator.SetFloat("Z", 1);
+        animator.SetFloat("K", 1);
     }
 
     private void DeathPlayer()
     {
-        animator.SetBool(jump, false);
-        animator.SetBool(idle, false);
-        animator.SetBool(walk, false);
-        animator.SetBool(run, false);
-        animator.SetBool(Rifle, false);
-        animator.SetBool(Pistol, false);
-        animator.SetBool(walkRifle, false);
-        animator.SetBool(walkPistol, false);
-        animator.SetBool(chute1, false);
-        animator.SetBool(chute2, false);
-        animator.SetBool(giro1, false);
-        animator.SetBool(giro2, false);
-        animator.SetBool(soco1, false);
-        animator.SetBool(soco2, false);
-        animator.SetBool(death, true);
+        animator.SetBool("death",true);
         /*
 
         bool resp = gameover.ShowTelaGameOver(true);
@@ -383,46 +322,43 @@ public class Player1 : MonoBehaviour
 
     }
 
+    private void RunPistoPlayer()
+    {
+        animator.SetBool("rifle", false);
+        animator.SetFloat("X", 0);
+        animator.SetFloat("Y", -1);
+    }
+
+    private void RunRiflePlayer()
+    {
+        animator.SetBool("rifle", true);
+        animator.SetFloat("Z", 0);
+        animator.SetFloat("K", 1);
+    }
     private void ReloadScene()
     {
         //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
     private void IdlePlayer()
     {
-        animator.SetBool(jump, false);
-        animator.SetBool(idle, true);
-        animator.SetBool(walk, false);
-        animator.SetBool(run, false);
-        animator.SetBool(Rifle, false);
-        animator.SetBool(Pistol, false);
-        animator.SetBool(walkRifle, false);
-        animator.SetBool(walkPistol, false);
-        animator.SetBool(chute1, false);
-        animator.SetBool(chute2, false);
-        animator.SetBool(giro1, false);
-        animator.SetBool(giro2, false);
-        animator.SetBool(soco1, false);
-        animator.SetBool(soco2, false);
-        animator.SetBool(death, false);
+        if (pistolBool)
+        {
+            AttackPistolFirePlayer();
+        }
+        else if (rifleBool)
+        {
+            AttackRifleFirePlayer();
+        }
     }
-    private void RunningPlayer()
+
+    private Vector3 GetDirectionVector(float angleY)
     {
-        animator.SetBool(jump, false);
-        animator.SetBool(idle, false);
-        animator.SetBool(walk, false);
-        animator.SetBool(run, true);
-        animator.SetBool(Rifle, false);
-        animator.SetBool(Pistol, false);
-        animator.SetBool(walkRifle, false);
-        animator.SetBool(walkPistol, false);
-        animator.SetBool(chute1, false);
-        animator.SetBool(chute2, false);
-        animator.SetBool(giro1, false);
-        animator.SetBool(giro2, false);
-        animator.SetBool(soco1, false);
-        animator.SetBool(soco2, false);
-        animator.SetBool(death, false);
-        transform.Translate(vel * velocity * 2);
+        float radianY = angleY * Mathf.Deg2Rad;
+
+        float x = Mathf.Sin(radianY);
+        float z = Mathf.Cos(radianY);
+
+        return new Vector3(x, 0, z);
     }
 
 

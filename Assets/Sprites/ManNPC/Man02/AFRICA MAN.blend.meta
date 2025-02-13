@@ -3,9 +3,44 @@ guid: 4705e60f3d694ca4ab4998278c132238
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Eye_brown
+    second: {fileID: 2100000, guid: 269c22299b3023e49bd1ce039e080ca3, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Shoes02
+    second: {fileID: 2100000, guid: 428b1f79c6367cf499c7ae1094c43960, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: male_casualsuit02
+    second: {fileID: 2100000, guid: 87866c2ea8129684a8496733ade20a4c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: middleage_african_male
+    second: {fileID: 2100000, guid: 6bad522c38dc240428d7be191a29f763, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: short04
+    second: {fileID: 2100000, guid: 017571992fd405446a134f925f3886b8, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: teethMaterial
+    second: {fileID: 2100000, guid: aa6e6bef4e2b70548943f85577b4c1c2, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: tongue01Material
+    second: {fileID: 2100000, guid: 9487ab1ea16a799429462135a6a6956a, type: 2}
   materials:
-    materialImportMode: 2
+    materialImportMode: 1
     materialName: 0
     materialSearch: 1
     materialLocation: 1
