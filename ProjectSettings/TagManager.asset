@@ -9,6 +9,8 @@ TagManager:
   - Player1
   - Player2
   - Train
+  - Trigger
+  - Destroy
   layers:
   - Default
   - TransparentFX
