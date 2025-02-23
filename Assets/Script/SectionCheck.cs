@@ -19,7 +19,7 @@ public class SectionCheck : MonoBehaviour
             other.gameObject.transform.position = new Vector3(triggerPos.x, triggerPos.y + 100, triggerPos.z);
             
             // Cria o novo vagão na posição desejada
-            Vector3 spawnPosition = new Vector3(0, 0, transform.position.z + 9);
+            Vector3 spawnPosition = new Vector3(0, 0, transform.position.z + 11.5f);
             GameObject newSection = Instantiate(roadSection, spawnPosition, roadSection.transform.rotation);
             
             vagaoCounter++;
@@ -41,10 +41,10 @@ public class SectionCheck : MonoBehaviour
             // Se o tempo atual é menor que o horário do próximo ciclo de destruição, 
             // aguarda o período remanescente e adiciona 10 segundos; caso contrário, usa 10 segundos
             float currentTime = Time.time;
-            float delay = 10f;
+            float delay = 10000000f;
             if(currentTime < nextDestructionTime)
             {
-                delay = (nextDestructionTime - currentTime) + 10f;
+                delay = (nextDestructionTime - currentTime) + 1000000f;
             }
             nextDestructionTime = currentTime + delay;
             
