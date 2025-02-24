@@ -3,7 +3,12 @@ guid: 11c5870c800f23f4f80b33188cd2a3e8
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: mat_0-T_CH_FNPCMilitiaWoman_cm.jpg
+    second: {fileID: 2100000, guid: 4593398faf9bb2547907eb6638c9589d, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
