@@ -8,21 +8,13 @@ public class VerificaAlvo : MonoBehaviour
     public Camera camera;
     public LayerMask mask;
     public Image alvo;
-    float mouseY = 0f, mouseX = 0f;
     float sensibilidade = 1.2f;
+    public Transform armaMira;
 
     private void Update()
     {
         VerificaAlvoEnemies();
-
-
-        mouseY += Input.GetAxisRaw("Mouse X") * sensibilidade;
-        mouseX += Input.GetAxisRaw("Mouse Y") * sensibilidade;
-
-        mouseX = Mathf.Clamp(mouseX, -90f, 90f);
-
-        camera.transform.eulerAngles = new Vector3(-mouseX, mouseY, 0);
-
+   
     }
 
     public void VerificaAlvoEnemies()

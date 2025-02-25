@@ -3,12 +3,22 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - point
+  - portal
+  - Train
+  - enemy
+  - pistol
+  - rifle
+  - enemyPistol
+  - enemyRifle
+  - balaRifle
+  - balaPistol
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Enemy
   - Water
   - UI
   - 

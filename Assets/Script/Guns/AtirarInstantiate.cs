@@ -8,11 +8,27 @@ public class AtirarInstantiate : MonoBehaviour
     public GameObject bala;
     public Transform PontoFire;
     public Camera camera;
-    public Transform player;
+    private Transform player;
+
+    private void Start()
+    {
+        player = GameObject.FindGameObjectWithTag("Player").transform;
+    }
 
     public void InstantiateBala()
     {
-        // Calcula a direção normalizada da bala
+        if (player == null)
+        {
+            Debug.LogError("O objeto 'player' está nulo!");
+            return;
+        }
+
+        if (PontoFire == null)
+        {
+            Debug.LogError("O objeto 'PontoFire' está nulo!");
+            return;
+        }
+
         Vector3 direction = (player.position - PontoFire.position).normalized;
 
         GameObject balas = Instantiate(bala, PontoFire.position, Quaternion.identity);
@@ -34,7 +50,6 @@ public class AtirarInstantiate : MonoBehaviour
             targetPoint = ray.GetPoint(100f);
         }
 
-        // Calcula a direção normalizada da bala
         Vector3 direction = (targetPoint - PontoFire.position).normalized;
 
         GameObject balas = Instantiate(bala, PontoFire.position, Quaternion.identity);
@@ -43,3 +58,4 @@ public class AtirarInstantiate : MonoBehaviour
     
         
 }
+

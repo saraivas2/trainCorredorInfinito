@@ -9,7 +9,6 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: tongue01
   m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
-  m_Parent: {fileID: 70966067657747897, guid: 77dad439923533b4dad6b4c5ba1a9799, type: 3}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
   m_InvalidKeywords: []

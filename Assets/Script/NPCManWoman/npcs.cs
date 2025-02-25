@@ -11,13 +11,13 @@ public class npcs : MonoBehaviour
     GameObject[] EnemiesPistol;
     bool tiroEnemy;
 
-
     // Start is called before the first frame update
     void Start()
     {
         animator = GetComponent<Animator>();
-        Dust = GameObject.Find("Pistol Idle");
-        
+        Dust = GameObject.FindGameObjectWithTag("Player");
+
+
     }
 
     // Update is called once per frame
@@ -28,6 +28,7 @@ public class npcs : MonoBehaviour
         if (tiro | tiroEnemy) 
         {
             OcorreTiro();
+      
         }
         else
         {

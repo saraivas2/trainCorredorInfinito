@@ -220,7 +220,7 @@ ModelImporter:
       name: object_9
     second: {fileID: 2100000, guid: 095abdeea908b8e4faad716e13d3e1ce, type: 2}
   materials:
-    materialImportMode: 2
+    materialImportMode: 1
     materialName: 0
     materialSearch: 1
     materialLocation: 1

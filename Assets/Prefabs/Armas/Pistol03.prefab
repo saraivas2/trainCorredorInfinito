@@ -101,8 +101,32 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: dc429fd1e73c58f4481eec52dd774ec0, type: 3}
       insertIndex: -1
       addedObject: {fileID: 10237755245730552}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: dc429fd1e73c58f4481eec52dd774ec0, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 936561469152015866}
   m_SourcePrefab: {fileID: 100100000, guid: dc429fd1e73c58f4481eec52dd774ec0, type: 3}
+--- !u!1 &4663772939330581274 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: dc429fd1e73c58f4481eec52dd774ec0, type: 3}
+  m_PrefabInstance: {fileID: 5510265292303748683}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &936561469152015866
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4663772939330581274}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92ff2aed01ac299428e273f8955f63fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bala: {fileID: 3773799997539913190, guid: 23605c524b9c2ad45852a278f3975fee, type: 3}
+  PontoFire: {fileID: 10237755245730552}
+  camera: {fileID: 0}
+  player: {fileID: 0}
 --- !u!4 &5472678852739246496 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: dc429fd1e73c58f4481eec52dd774ec0, type: 3}

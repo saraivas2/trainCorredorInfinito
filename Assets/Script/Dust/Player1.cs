@@ -17,13 +17,13 @@ public class Player1 : MonoBehaviour
     float sensibilidade = 1.2f;
     private Animator animator;
     private Rigidbody rb;
-    private bool pistolBool, rifleBool,SemTiro,tiro;
-    bool death = false;
+    private bool pistolBool, rifleBool,SemTiro;
+    bool death = false, tiro=false;
     public float forca;
     private int vel = 1, val=1;
     private Vector3 camVect;
     public float tempo = 0;
-    float tempoTiro = 10;
+    float tempotiro = 30;
     private float vida = 100;
     bool pausar = false;
     public Camera mycam;
@@ -31,19 +31,18 @@ public class Player1 : MonoBehaviour
 
     private void Start()
     {
-        if (travarMouse)
-        {
-            Cursor.visible = false;
-            Cursor.lockState = CursorLockMode.Locked;
-        }
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
         SemTiro = true;
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
     }
     private void Update()
     {
-        if (PausarMenuDojogo.pausa) return; 
+        if (PausarMenuDojogo.pausa) return;
 
+        mycam.transform.rotation = transform.rotation;
+        
         if (!death)
         {
             comandosMove();
@@ -70,6 +69,8 @@ public class Player1 : MonoBehaviour
                 idleRifle.SetActive(true);
 
             }
+
+            TempoTiro();
 
             tempo -= Time.deltaTime;
             if (tempo <= 0)
@@ -175,12 +176,13 @@ public class Player1 : MonoBehaviour
     {
         if (tiro)
         {
-            tempoTiro -= Time.deltaTime;
+            tempotiro -= Time.deltaTime;
         }
 
-        if (tempoTiro <= 0)
+        if (tempotiro <= 0)
         {
             tiro = false;
+            tempotiro = 30;
         }
     }
 
@@ -210,6 +212,8 @@ public class Player1 : MonoBehaviour
 
         transform.eulerAngles = new Vector3(0, mouseY, 0);
 
+
+
         if (Input.GetKeyDown(KeyCode.Space))
         {
             jumpPlayerMoviment();
@@ -230,10 +234,8 @@ public class Player1 : MonoBehaviour
         {
             movePlayerBack();
             transform.Translate(Time.deltaTime * velocity * Vector3.back);
-        }
-        else
-        {
-            
+        }else
+        { 
             if (pistolBool)
             {
                 if (Input.GetMouseButton(0))
@@ -274,7 +276,7 @@ public class Player1 : MonoBehaviour
             tempo = 0.375f;
             SemTiro = true;
             tiro = true;
-            tempoTiro = 10;
+            tempotiro = 30;
             AudioPistolPlay();
         }   
 
@@ -291,7 +293,7 @@ public class Player1 : MonoBehaviour
                 AudioRiflePlay(); 
                 SemTiro = true;
                 tiro = true;
-                tempoTiro = 10;
+                tempotiro = 30;
             }
         }
     }

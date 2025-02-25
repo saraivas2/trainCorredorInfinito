@@ -31,7 +31,8 @@ public class enemiesRifle : MonoBehaviour
     void Start()
     {
         enemy = GetComponent<NavMeshAgent>();
-        player = GameObject.Find("Pistol Idle");
+        player = GameObject.FindGameObjectWithTag("Player");
+        
         animator = GetComponent<Animator>();
         if (player != null)
         {
@@ -43,14 +44,19 @@ public class enemiesRifle : MonoBehaviour
             return;
         }
 
+        enemy.enabled = false;
+        Invoke(nameof(EnableAgent), 0.1f);  // Ativa após um pequeno delay
+    }
 
-        if (NavMesh.SamplePosition(pointPosition.position, out NavMeshHit hit, 2f, NavMesh.AllAreas))
+    void EnableAgent()
+    {
+        if (pointPosition.position != null)
         {
-            enemy.Warp(hit.position);
+            enemy.Warp(pointPosition.position);
         }
         else
         {
-            Debug.LogWarning("NPC foi instanciado fora do NavMesh. Verifique a posição inicial!");
+            Debug.LogWarning("NPC não possui posição inicial!");
         }
     }
 
@@ -67,6 +73,7 @@ public class enemiesRifle : MonoBehaviour
         else
         {
             TimerDestroy();
+            enemy.enabled = false;
         }
     }
 
@@ -190,6 +197,7 @@ public class enemiesRifle : MonoBehaviour
 
     private void deathEnemy()
     {
+        
         if (death) return;
 
         animator.SetBool("attack", false);
