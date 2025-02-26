@@ -172,7 +172,7 @@ public class Player1 : MonoBehaviour
         mouseY += Input.GetAxisRaw("Mouse X") * sensibilidade;
         transform.eulerAngles = new Vector3(0, mouseY, 0);
 
-        // Prioriza movimento
+        // Prioriza os comandos de movimento
         if (Input.GetKeyDown(KeyCode.Space))
         {
             jumpPlayerMoviment();
@@ -196,6 +196,16 @@ public class Player1 : MonoBehaviour
             transform.Translate(Time.deltaTime * velocity * Vector3.back);
             return;
         }
+        if (Input.GetKey(KeyCode.A))
+        {
+            moveLeft();
+            return;
+        }
+        if (Input.GetKey(KeyCode.D))
+        {
+            moveRight();
+            return;
+        }
 
         // Se não houver movimento, atualiza a animação e dispara se necessário
         if (pistolBool)
@@ -210,7 +220,7 @@ public class Player1 : MonoBehaviour
         {
             if (Input.GetMouseButton(0))
             {
-                // Usa animação que permite o movimento ao disparar
+                // Usa animação que permite o movimento enquanto dispara
                 AttackRifleFireWalkPlayer();
                 ChamaTiroRifle();
             }
@@ -219,7 +229,36 @@ public class Player1 : MonoBehaviour
                 AttackRifleFirePlayer();
             }
         }
-        // Não forçamos uma parada se não há movimento explícito para não "travar" a animação.
+    }
+  
+    private void moveLeft()
+    {
+        // Move para a esquerda
+        transform.Translate(Vector3.left * velocity * Time.deltaTime);
+        // Você pode ajustar animações conforme necessário:
+        if (pistolBool)
+        {
+            animator.SetFloat("X", -1);
+        }
+        else if (rifleBool)
+        {
+            animator.SetFloat("Z", -1);
+        }
+    }
+  
+    private void moveRight()
+    {
+        // Move para a direita
+        transform.Translate(Vector3.right * velocity * Time.deltaTime);
+        // Ajusta animações se desejar:
+        if (pistolBool)
+        {
+            animator.SetFloat("X", 1);
+        }
+        else if (rifleBool)
+        {
+            animator.SetFloat("Z", 1);
+        }
     }
 
     private void ChamaTiroPistol()
