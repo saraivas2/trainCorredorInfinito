@@ -10,6 +10,9 @@ public class SectionCheck : MonoBehaviour
     // Armazena o horário (Time.time) em que o último vagão será destruído
     public static float nextDestructionTime = 0f;
     
+    // Define os pontos de spawn para os NPCs
+    public Transform[] enemySpawnPoints;
+    
     private void OnTriggerEnter(Collider other)
     {
         if(other.gameObject.CompareTag("Trigger"))
@@ -25,15 +28,39 @@ public class SectionCheck : MonoBehaviour
             vagaoCounter++;
             newSection.name = "vagao-" + vagaoCounter;
             
-            // Reseta a vida dos inimigos dentro do novo vagão
+            // Procura por pontos de spawn dentro do novo vagão utilizando a tag "EnemySpawnPoint"
+            List<Transform> spawnPoints = new List<Transform>();
+            foreach (Transform t in newSection.GetComponentsInChildren<Transform>())
+            {
+                if(t.CompareTag("EnemySpawnPoint"))
+                {
+                    spawnPoints.Add(t);
+                }
+            }
+            if(spawnPoints.Count == 0)
+            {
+                Debug.LogWarning("Nenhum ponto de spawn encontrado no novo vagão. Verifique se os pontos possuem a tag 'EnemySpawnPoint'.");
+            }
+            
+            // Reseta a vida dos NPCs e define um ponto de spawn aleatório (dentro do novo vagão) para cada um
             foreach (var enemyRifle in newSection.GetComponentsInChildren<enemiesRifle>())
             {
                 enemyRifle.vida = 100;
+                if(spawnPoints.Count > 0)
+                {
+                    int randomIndex = Random.Range(0, spawnPoints.Count);
+                    enemyRifle.pointPosition = spawnPoints[randomIndex];
+                }
             }
-
+            
             foreach (var enemyPistol in newSection.GetComponentsInChildren<enemiesPistol>())
             {
                 enemyPistol.vida = 100;
+                if(spawnPoints.Count > 0)
+                {
+                    int randomIndex = Random.Range(0, spawnPoints.Count);
+                    enemyPistol.pointPosition = spawnPoints[randomIndex];
+                }
             }
 
             // Após instanciar, localiza o Trigger dentro do novo vagão
@@ -50,7 +77,7 @@ public class SectionCheck : MonoBehaviour
             
             // Calcula o delay de destruição:
             // Se o tempo atual é menor que o horário do próximo ciclo de destruição, 
-            // aguarda o período remanescente e adiciona 10 segundos; caso contrário, usa 10 segundos
+            // aguarda o período remanescente e adiciona 1000000 segundos; caso contrário, usa 1000000 segundos
             float currentTime = Time.time;
             float delay = 1000000f;
             if(currentTime < nextDestructionTime)
