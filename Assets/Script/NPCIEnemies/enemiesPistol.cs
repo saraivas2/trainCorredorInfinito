@@ -53,9 +53,10 @@ public class enemiesPistol : MonoBehaviour
 
     void EnableAgent()
     {
-        if (pointPosition.position != null)
+        if (pointPosition != null)
         {
             enemy.Warp(pointPosition.position);
+            enemy.enabled = true;  // Reativa o NavMeshAgent
         }
         else
         {
