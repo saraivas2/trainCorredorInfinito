@@ -75,7 +75,6 @@ public class enemiesPistol : MonoBehaviour
         }
         else
         {
-            TimerDestroy();
             enemy.enabled = false;
         }
     }
@@ -128,15 +127,6 @@ public class enemiesPistol : MonoBehaviour
     public bool GetHunting()
     {
         return hunting;
-    }
-
-    private void TimerDestroy()
-    {
-        timer -= Time.deltaTime;
-        if (timer <= 0)
-        {
-            Destroy(enemyGameobject);
-        }
     }
 
     private void AttackDust()

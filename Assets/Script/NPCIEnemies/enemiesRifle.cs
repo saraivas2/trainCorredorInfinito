@@ -22,10 +22,8 @@ public class enemiesRifle : MonoBehaviour
     public Transform posAttack;
     bool death = false;
     public bool hunting = false;
-    float timer = 15;
     public GameObject enemyGameobject;
     public Transform pointPosition;
-
 
     // Start is called before the first frame update
     void Start()
@@ -67,17 +65,15 @@ public class enemiesRifle : MonoBehaviour
         if (!death)
         {
             Hunting();
-            AttackDust(); ;
+            AttackDust();
             if (!hunting) idleEnemy();
             if (vida <= 0) deathEnemy();
         }
         else
         {
-            TimerDestroy();
             enemy.enabled = false;
         }
     }
-
 
     public float GetVida()
     {
@@ -132,15 +128,6 @@ public class enemiesRifle : MonoBehaviour
         return hunting;
     }
 
-    private void TimerDestroy()
-    {
-        timer -= Time.deltaTime;
-        if (timer <= 0)
-        {
-            Destroy(enemyGameobject);
-        }
-    }
-    
     private void AttackDust()
     {
         if (!hunting) return;
@@ -163,8 +150,6 @@ public class enemiesRifle : MonoBehaviour
 
     private void ChamaTiroRifle()
     {
-
-
         if (Rifle == null)
         {
             Debug.LogWarning("Rifle não foi atribuído");
@@ -198,7 +183,6 @@ public class enemiesRifle : MonoBehaviour
 
     private void deathEnemy()
     {
-        
         if (death) return;
 
         animator.SetBool("attack", false);

@@ -25,6 +25,17 @@ public class SectionCheck : MonoBehaviour
             vagaoCounter++;
             newSection.name = "vagao-" + vagaoCounter;
             
+            // Reseta a vida dos inimigos dentro do novo vagão
+            foreach (var enemyRifle in newSection.GetComponentsInChildren<enemiesRifle>())
+            {
+                enemyRifle.vida = 100;
+            }
+
+            foreach (var enemyPistol in newSection.GetComponentsInChildren<enemiesPistol>())
+            {
+                enemyPistol.vida = 100;
+            }
+
             // Após instanciar, localiza o Trigger dentro do novo vagão
             Collider[] childColliders = newSection.GetComponentsInChildren<Collider>();
             foreach (Collider col in childColliders)
@@ -41,7 +52,7 @@ public class SectionCheck : MonoBehaviour
             // Se o tempo atual é menor que o horário do próximo ciclo de destruição, 
             // aguarda o período remanescente e adiciona 10 segundos; caso contrário, usa 10 segundos
             float currentTime = Time.time;
-            float delay = 10000000f;
+            float delay = 1000000f;
             if(currentTime < nextDestructionTime)
             {
                 delay = (nextDestructionTime - currentTime) + 1000000f;
