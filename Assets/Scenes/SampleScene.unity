@@ -19856,12 +19856,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1693904278}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4294a6ad5510ca341ac9dd9b9316e3c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  vel: 15
+  vel: 0.8
 --- !u!54 &1693904282
 Rigidbody:
   m_ObjectHideFlags: 0
