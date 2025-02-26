@@ -17,10 +17,10 @@ public class Player1 : MonoBehaviour
     float sensibilidade = 1.2f;
     private Animator animator;
     private Rigidbody rb;
-    private bool pistolBool, rifleBool,SemTiro;
-    bool death = false, tiro=false;
+    private bool pistolBool, rifleBool, SemTiro;
+    bool death = false, tiro = false;
     public float forca;
-    private int vel = 1, val=1;
+    private int vel = 1, val = 1;
     private Vector3 camVect;
     public float tempo = 0;
     float tempotiro = 30;
@@ -42,24 +42,21 @@ public class Player1 : MonoBehaviour
         if (PausarMenuDojogo.pausa) return;
 
         mycam.transform.rotation = transform.rotation;
-        
+
         if (!death)
         {
-            comandosMove();
-
-            if (Input.GetMouseButton(1))
+            // Troca de arma pelo botão "1"
+            if (Input.GetKeyDown(KeyCode.Alpha1))
             {
                 val *= -1;
                 AudioTrocaArma();
             }
-
             if (val > 0)
             {
                 pistolBool = true;
                 rifleBool = false;
                 idlePistol.SetActive(true);
                 idleRifle.SetActive(false);
-
             }
             else
             {
@@ -67,11 +64,12 @@ public class Player1 : MonoBehaviour
                 rifleBool = true;
                 idlePistol.SetActive(false);
                 idleRifle.SetActive(true);
-
             }
 
+            comandosMove();
             TempoTiro();
 
+            // Atualiza o "timer" de recarga de tiro
             tempo -= Time.deltaTime;
             if (tempo <= 0)
             {
@@ -85,7 +83,7 @@ public class Player1 : MonoBehaviour
 
         if (vida < 100)
         {
-            if (RecupVidaERifle() & RecupVidaEPistol())
+            if (RecupVidaERifle() && RecupVidaEPistol())
             {
                 if (TimerCount())
                 {
@@ -93,7 +91,6 @@ public class Player1 : MonoBehaviour
                 }
             }
         }
-
     }
 
     void RecuperaVida()
@@ -113,76 +110,47 @@ public class Player1 : MonoBehaviour
     bool TimerCount()
     {
         TimerAction -= Time.deltaTime;
-
-        if (TimerAction <= 0)
-        {
-
-            return true;
-        }
-        return false;
+        return TimerAction <= 0;
     }
 
     bool RecupVidaERifle()
     {
         GameObject[] enemyrifle = GameObject.FindGameObjectsWithTag("enemyRifle");
-
-        bool allEnemyStoppedHunting = true;
-
-        foreach (GameObject enemyr in enemyrifle)
+        foreach (GameObject enemy in enemyrifle)
         {
-            enemiesRifle enemyScript = enemyr.GetComponent<enemiesRifle>();
-
-            if (enemyScript != null)
+            enemiesRifle enemyScript = enemy.GetComponent<enemiesRifle>();
+            if (enemyScript != null && enemyScript.GetHunting())
             {
-                bool isHunting = enemyScript.GetHunting();
-
-                if (isHunting)
-                {
-                    allEnemyStoppedHunting = false;
-                    return allEnemyStoppedHunting;
-                }
+                return false;
             }
-
         }
-        return allEnemyStoppedHunting;
+        return true;
     }
 
     bool RecupVidaEPistol()
     {
         GameObject[] enemypistol = GameObject.FindGameObjectsWithTag("enemyPistol");
-
-        bool allEnemyStoppedHunting = true;
-
-        foreach (GameObject enemyp in enemypistol)
+        foreach (GameObject enemy in enemypistol)
         {
-            enemiesPistol enemyScript = enemyp.GetComponent<enemiesPistol>();
-
-            if (enemyScript != null)
+            enemiesPistol enemyScript = enemy.GetComponent<enemiesPistol>();
+            if (enemyScript != null && enemyScript.GetHunting())
             {
-                bool isHunting = enemyScript.GetHunting();
-
-                if (isHunting)
-                {
-                    allEnemyStoppedHunting = false;
-                    return allEnemyStoppedHunting;
-                }
+                return false;
             }
         }
-        return allEnemyStoppedHunting;
+        return true;
     }
-
 
     void TempoTiro()
     {
         if (tiro)
         {
             tempotiro -= Time.deltaTime;
-        }
-
-        if (tempotiro <= 0)
-        {
-            tiro = false;
-            tempotiro = 30;
+            if (tempotiro <= 0)
+            {
+                tiro = false;
+                tempotiro = 30;
+            }
         }
     }
 
@@ -196,162 +164,123 @@ public class Player1 : MonoBehaviour
         }
     }
 
-    public float GetVida()
-    {
-        return vida;
-    }
+    public float GetVida() => vida;
+    public bool HouveTiro() => tiro;
 
-    public bool HouveTiro()
-    {
-        return tiro;
-    }
-    
     private void comandosMove()
     {
         mouseY += Input.GetAxisRaw("Mouse X") * sensibilidade;
-
         transform.eulerAngles = new Vector3(0, mouseY, 0);
 
-
-
+        // Prioriza movimento
         if (Input.GetKeyDown(KeyCode.Space))
         {
             jumpPlayerMoviment();
+            return;
         }
-        else if (Input.GetKey(KeyCode.R))
+        if (Input.GetKey(KeyCode.R))
         {
             moveRun();
             AudioRunPlay();
+            return;
         }
-        else if (Input.GetKey(KeyCode.W))
+        if (Input.GetKey(KeyCode.W))
         {
             moveWalk();
             AudioWalkPlay();
-
-
+            return;
         }
-        else if (Input.GetKey(KeyCode.S))
+        if (Input.GetKey(KeyCode.S))
         {
             movePlayerBack();
             transform.Translate(Time.deltaTime * velocity * Vector3.back);
-        }else
-        { 
-            if (pistolBool)
-            {
-                if (Input.GetMouseButton(0))
-                {
-                    ChamaTiroPistol();
-                }
-                AttackPistolFirePlayer();
-            }
-            else if (rifleBool)
-            {
-                if (Input.GetMouseButton(0))
-                {
-                    AttackFireStopPlayer();
-                    ChamaTiroRifle();
-                }
-                else
-                {
-                    AttackRifleFirePlayer();
-                }
-                
-            }
-
-            AudioWalkStop();
-            AudioRunStop();
-            
-            transform.Translate(Vector3.zero);
+            return;
         }
+
+        // Se não houver movimento, atualiza a animação e dispara se necessário
+        if (pistolBool)
+        {
+            if (Input.GetMouseButton(0))
+            {
+                ChamaTiroPistol();
+            }
+            AttackPistolFirePlayer();
+        }
+        else if (rifleBool)
+        {
+            if (Input.GetMouseButton(0))
+            {
+                // Usa animação que permite o movimento ao disparar
+                AttackRifleFireWalkPlayer();
+                ChamaTiroRifle();
+            }
+            else
+            {
+                AttackRifleFirePlayer();
+            }
+        }
+        // Não forçamos uma parada se não há movimento explícito para não "travar" a animação.
     }
 
     private void ChamaTiroPistol()
     {
-       
-        
         if (!SemTiro)
         {
-            AtirarInstantiate PistolInstantiateScript = Pistol.gameObject.GetComponentInChildren<AtirarInstantiate>();
-            PistolInstantiateScript.InstantiateBalaDust();
+            AtirarInstantiate script = Pistol.GetComponentInChildren<AtirarInstantiate>();
+            if (script != null)
+            {
+                script.InstantiateBalaDust();
+            }
             tempo = 0.375f;
             SemTiro = true;
             tiro = true;
             tempotiro = 30;
             AudioPistolPlay();
-        }   
-
+        }
     }
 
     private void ChamaTiroRifle()
     {
         if (!SemTiro)
         {
-            AtirarInstantiate RifleInstantiateScript = Rifle.gameObject.GetComponentInChildren<AtirarInstantiate>();
+            AtirarInstantiate script = Rifle.GetComponentInChildren<AtirarInstantiate>();
+            if (script != null)
             {
-                RifleInstantiateScript.InstantiateBalaDust();
-                tempo = 0.1f;
-                AudioRiflePlay(); 
-                SemTiro = true;
-                tiro = true;
-                tempotiro = 30;
+                script.InstantiateBalaDust();
             }
+            tempo = 0.1f;
+            AudioRiflePlay();
+            SemTiro = true;
+            tiro = true;
+            tempotiro = 30;
         }
     }
 
-    public void AudioWalkPlay()
-    {
-        /*AudioController scritp = GameObject.Find("Walk").GetComponent<AudioController>();
-        scritp.AudioArmasPlay();*/
-    }
-
+    public void AudioWalkPlay() { /* Implementação se necessário */ }
     public void AudioWalkStop()
     {
         AudioController scritp = GameObject.Find("Walk").GetComponent<AudioController>();
         scritp.AudioArmasStop();
     }
-
-    public void AudioRunPlay()
-    {
-        /*AudioController scritp = GameObject.Find("Run").GetComponent<AudioController>();
-        scritp.AudioArmasPlay();*/
-    }
-
-    public void AudioRunStop()
-    {
-        /*AudioController scritp = GameObject.Find("Run").GetComponent<AudioController>();
-        scritp.AudioArmasStop();*/
-    }
-
+    public void AudioRunPlay() { /* Implementação se necessário */ }
+    public void AudioRunStop() { /* Implementação se necessário */ }
     public void AudioPistolPlay()
     {
         AudioController scritp = GameObject.Find("Pistol").GetComponent<AudioController>();
         scritp.AudioArmasPlay();
     }
-
     public void AudioDeathPlay()
     {
         AudioController scritp = GameObject.Find("Death").GetComponent<AudioController>();
         scritp.AudioArmasPlay();
     }
-
-    public void AudioTrocaArma()
-    {
-        /*AudioController scritp = GameObject.Find("TrocaArma").GetComponent<AudioController>();
-        scritp.AudioArmasStop();*/
-    }
-
+    public void AudioTrocaArma() { /* Implementação se necessário */ }
     public void AudioRiflePlay()
     {
         ExecutaAudio scritp = GameObject.Find("Rifle").GetComponent<ExecutaAudio>();
         scritp.InstantiateAudio();
     }
-
-    public void SoundEffectDamage()
-    {
-        /*ExecutaAudio scritp = GameObject.Find("Damage").GetComponent<ExecutaAudio>();
-        scritp.InstantiateAudio();*/
-    }
-
+    public void SoundEffectDamage() { /* Implementação se necessário */ }
 
     private void jumpPlayerMoviment()
     {
@@ -369,10 +298,8 @@ public class Player1 : MonoBehaviour
             {
                 ChamaTiroRifle();
             }
-                       
             JumpPlayerRifle();
         }
-        
         rb.AddForce(Vector3.up * forca * Time.deltaTime, ForceMode.Impulse);
     }
 
@@ -381,13 +308,10 @@ public class Player1 : MonoBehaviour
         if (other.gameObject.CompareTag("balaRifle"))
         {
             VidaDamage(other.GetComponent<balas>().Damage());
-
         }
-
         if (other.gameObject.CompareTag("balaPistol"))
         {
             VidaDamage(other.GetComponent<balas>().Damage());
-
         }
     }
 
@@ -399,7 +323,6 @@ public class Player1 : MonoBehaviour
             {
                 ChamaTiroPistol();
             }
-            
             RunPistoPlayer();
             vel = 4;
         }
@@ -409,39 +332,38 @@ public class Player1 : MonoBehaviour
             {
                 ChamaTiroRifle();
             }
-            
             RunRiflePlayer();
             vel = 4;
         }
-        transform.Translate(Time.deltaTime * Vector3.forward * velocity * vel);
-        
+        transform.Translate(Vector3.forward * velocity * vel * Time.deltaTime);
     }
-
 
     private void moveWalk()
     {
-        if (Input.GetMouseButton(0) & pistolBool)
+        if (Input.GetMouseButton(0))
         {
-            AttackPistolFireWalkPlayer();
-            ChamaTiroPistol();
-
-        } else if (Input.GetMouseButton(0) & rifleBool)
-        {
-            AttackRifleFireWalkPlayer();
-            ChamaTiroRifle();
+            if (pistolBool)
+            {
+                AttackPistolFireWalkPlayer();
+                ChamaTiroPistol();
+            }
+            else if (rifleBool)
+            {
+                AttackRifleFireWalkPlayer();
+                ChamaTiroRifle();
+            }
         }
         else
         {
+            // Caso nenhum botão de disparo seja pressionado, segue a animação de caminhada
             movePlayer();
-            vel = 1;          
+            vel = 1;
         }
-        transform.Translate(Time.deltaTime * Vector3.forward * velocity * vel);
-        
+        transform.Translate(Vector3.forward * velocity * vel * Time.deltaTime);
     }
 
     private void movePlayer()
     {
-
         if (pistolBool)
         {
             AttackPistolFireWalkPlayer();
@@ -454,7 +376,6 @@ public class Player1 : MonoBehaviour
 
     private void movePlayerBack()
     {
-
         if (pistolBool)
         {
             AttackPistolFireWalkBack();
@@ -464,6 +385,7 @@ public class Player1 : MonoBehaviour
             AttackRifleFireWalkBack();
         }
     }
+
     private void AttackPistolFireWalkBack()
     {
         animator.SetBool("rifle", false);
@@ -495,9 +417,8 @@ public class Player1 : MonoBehaviour
     private void AttackGolpePlayer()
     {
         animator.SetBool("rifle", true);
-        animator.SetFloat("Z",0);
-        animator.SetFloat("K",1);
-
+        animator.SetFloat("Z", 0);
+        animator.SetFloat("K", 1);
     }
 
     private void AttackFireStopPlayer()
@@ -505,15 +426,14 @@ public class Player1 : MonoBehaviour
         animator.SetBool("rifle", true);
         animator.SetFloat("Z", -1);
         animator.SetFloat("K", -1);
-
     }
+
     private void AttackPistolFirePlayer()
     {
         animator.SetBool("rifle", false);
         animator.SetFloat("X", 0);
         animator.SetFloat("Y", 0);
     }
-
 
     private void AttackPistolFireWalkPlayer()
     {
@@ -540,9 +460,9 @@ public class Player1 : MonoBehaviour
     {
         GameOverScript gameover = GameObject.Find("GameOver").GetComponent<GameOverScript>();
         gameover.ShowTelaGameOver(true);
-
         Invoke("ReloadScene", 5f);
     }
+
     private void DeathPlayer()
     {
         animator.SetBool("death", true);
@@ -562,10 +482,12 @@ public class Player1 : MonoBehaviour
         animator.SetFloat("Z", 0);
         animator.SetFloat("K", 1);
     }
+
     private void ReloadScene()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
+
     private void IdlePlayer()
     {
         if (pistolBool)
