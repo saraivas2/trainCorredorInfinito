@@ -1460,6 +1460,7 @@ GameObject:
   - component: {fileID: 79729760}
   - component: {fileID: 79729761}
   - component: {fileID: 79729762}
+  - component: {fileID: 79729763}
   m_Layer: 0
   m_Name: Portal1_SubwayTrain
   m_TagString: portal
@@ -1552,7 +1553,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 79729756}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
   m_Name: 
@@ -1565,6 +1566,19 @@ MonoBehaviour:
   m_IgnoreFromBuild: 1
   m_ApplyToChildren: 1
   m_AffectedAgents: ffffffff
+--- !u!114 &79729763
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 79729756}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69dc74cd017f6d4478f374d114fa92f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneName: InsideTrain
 --- !u!1 &92575183
 GameObject:
   m_ObjectHideFlags: 0
